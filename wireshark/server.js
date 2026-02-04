@@ -85,6 +85,13 @@ wss.on('connection', (ws) => {
     
     writeLog(`Client ${clientId} connected. (Total: ${clientCount} clients)`);
 
+    // ส่ง welcome message พร้อม client ID ให้ client ใหม่
+    ws.send(JSON.stringify({
+        type: 'welcome',
+        clientId: clientId,
+        message: `You are Client ${clientId}`
+    }));
+
     // ฟัง pong จาก client
     ws.on('pong', () => {
         ws.isAlive = true;
@@ -92,14 +99,15 @@ wss.on('connection', (ws) => {
 
     ws.on('message', (message) => {
         const msgStr = message.toString();
-        const clientId = clients.get(ws);
-        writeLog(`Client ${clientId}: ${msgStr}`);
+        const senderId = clients.get(ws);
+        writeLog(`Client ${senderId}: ${msgStr}`);
 
         // Forward message to ALL clients including sender
         wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify({
-                    clientId: clientId,
+                    type: 'message',
+                    senderId: senderId,
                     message: msgStr,
                     timestamp: new Date().toLocaleTimeString()
                 }));

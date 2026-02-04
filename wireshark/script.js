@@ -54,14 +54,19 @@ function connectWebSocket() {
         try {
             const data = JSON.parse(event.data);
             
-            // If this is from our client, update myClientId if not set
-            if (!myClientId) {
+            // Handle welcome message with our client ID
+            if (data.type === 'welcome') {
                 myClientId = data.clientId;
                 myClientIdEl.textContent = `Client ${myClientId}`;
+                addSystemMessage(`✓ Connected as Client ${myClientId}`);
+                return;
             }
             
-            const isOwn = data.clientId === myClientId;
-            displayMessage(data.clientId, data.message, data.timestamp, isOwn);
+            // Handle regular messages
+            if (data.type === 'message') {
+                const isOwn = data.senderId === myClientId;
+                displayMessage(data.senderId, data.message, data.timestamp, isOwn);
+            }
         } catch (e) {
             console.error('Failed to parse message:', e);
         }
