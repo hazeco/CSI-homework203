@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paginated Table</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Paginated Table</h1>
+                <p class="text-gray-600">Data from Google Sheets</p>
+            </div>
+
+            <!-- Table Container -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100 border-b border-gray-200">
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Birth Year</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">City</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-gray-200">
+                            <!-- Data rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="p-8 text-center">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+                    <p class="mt-4 text-gray-600">Loading data...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="p-8 text-center hidden">
+                    <p class="text-gray-500">No data available</p>
+                </div>
+            </div>
+
+            <!-- Pagination Footer -->
+            <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-4 bg-white rounded-lg shadow-sm">
+                <!-- Info Text -->
+                <div class="text-sm text-gray-600">
+                    <span>Showing <span id="showingStart" class="font-semibold">0</span> to <span id="showingEnd" class="font-semibold">0</span> of <span id="totalCount" class="font-semibold">0</span> entries</span>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="flex items-center gap-2">
+                    <button id="prevBtn" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                        ← Prev
+                    </button>
+
+                    <div id="pageButtons" class="flex gap-1">
+                        <!-- Page buttons will be inserted here -->
+                    </div>
+
+                    <button id="nextBtn" class="px-3 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                        Next →
+                    </button>
+                </div>
+
+                <!-- Page Info -->
+                <div class="text-sm text-gray-600">
+                    <span>Page <span id="currentPage" class="font-semibold">1</span> of <span id="totalPages" class="font-semibold">1</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
